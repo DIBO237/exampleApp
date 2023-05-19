@@ -1,20 +1,16 @@
-# Use an official Node.js runtime as the base image
-FROM node:14
+FROM python:3.7-slim
 
-# Set the working directory in the container
-WORKDIR /
+COPY ./requirements.txt /app/requirements.txt
 
-# Copy the package.json and package-lock.json files
-COPY package*.json ./
+WORKDIR /app
 
-# Install application dependencies
-RUN npm install
+RUN pip install -r requirements.txt
 
-# Copy the application code
-COPY . .
+COPY . /app
 
-# Expose the port on which your application listens
-EXPOSE 8080
+EXPOSE 8081 
 
-# Set the command to run your application
-CMD ["node", "app.js"]
+ENTRYPOINT [ "python" ]
+
+CMD [ "app.py" ]
+
